@@ -1,7 +1,6 @@
-# README
+# Volunteer Event Signup
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Volunteer Event Signup is a side project I started for fun with the idea that people could use to coordinate registration for various groups of volunteers and shifts for their events. It utilizes React TypeScript for frontend and Ruby on Rails for backend. Stay tuned!
 
 Things you may want to cover:
 
