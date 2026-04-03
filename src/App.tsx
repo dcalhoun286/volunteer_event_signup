@@ -1,3 +1,3 @@
-import Routes from "../routes/index";
+import Routes from "./routes/index";
 
 export default (_props: any) => <>{Routes}</>;
