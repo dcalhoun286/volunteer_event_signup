@@ -10,9 +10,9 @@ export const Home = () => (
         </p>
         <hr className="my-4" />
         <Link
-          to=""
+          to="/login"
           className="btn btn-lg custom-button"
-          role="button"
+          role="link"
         >
           Login
         </Link>
