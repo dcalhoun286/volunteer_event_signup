@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 
-export const Home = () => (
-  <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
-    <div className="jumbotron jumbotron-fluid bg-transparent">
+export const Home = () => {
+
+  return (
+    <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
       <div className="container secondary-color">
         <h1 className="display-4">Volunteer Event Signup</h1>
         <p className="lead">
@@ -18,5 +19,5 @@ export const Home = () => (
         </Link>
       </div>
     </div>
-  </div>
-);
+  );
+};
