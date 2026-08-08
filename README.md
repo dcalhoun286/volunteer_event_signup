@@ -84,7 +84,8 @@ The application will be available at `http://localhost:3000`
 ├── spec/                # RSpec tests
 ├── Gemfile              # Ruby dependencies
 ├── package.json         # Node.js dependencies
-└── tsconfig.json        # TypeScript configuration
+├── tsconfig.json        # TypeScript configuration
+└── vitest.config.ts     # Vitest configuration
 ```
 
 ## Deployment
