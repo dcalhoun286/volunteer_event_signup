@@ -11,14 +11,11 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^6.0.5",
     "esbuild": "^0.27.4",
-    "http-server": "^14.1.1",
     "jsdom": "^30.0.1",
     "vite": "^8.2.1",
     "vitest": "^4.1.10"
   },
   "scripts": {
-    "dev": "http-server dist -p 3000 -c-1",
-    "serve": "http-server dist -p 3000 -c-1",
     "vite": "vite",
     "test": "vitest",
     "build": "mkdir -p dist && cp index.html dist/ && yarn build:css && esbuild src/index.tsx --bundle --sourcemap --format=esm --outdir=dist --public-path=/assets",

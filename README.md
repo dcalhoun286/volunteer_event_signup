@@ -149,7 +149,7 @@ volunteer_event_signup/
 ├── package.json         # Node.js dependencies
 ├── tsconfig.json        # TypeScript configuration
 ├── vitest.config.ts     # Vitest configuration
-└── vite.config.ts       # Vite configuration
+└── vite.config.mts       # Vite configuration
 ```
 
 ## Architecture
