@@ -1,0 +1,12 @@
+[build]
+command = "yarn build"
+publish = "dist"
+
+[dev]
+command = "yarn watch"
+port = 3000
+
+[[redirects]]
+from = "/api/*"
+to = "https://api.yourapp.com/:splat"
+status = 200

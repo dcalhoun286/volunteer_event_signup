@@ -20,6 +20,7 @@ Bundler.require(*Rails.groups)
 
 module VolunteerEventSignup
   class Application < Rails::Application
+    config.api_only = true
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 

@@ -1,96 +1,227 @@
 # Volunteer Event Signup
 
-Volunteer Event Signup is a side project I've created for coordinating volunteer registration and shifts for events. It features a React TypeScript frontend and Ruby on Rails backend.
+A full-stack platform for coordinating volunteer registration and shift management for events. Built with React + TypeScript frontend and Ruby on Rails backend, demonstrating modern web development practices including CI/CD, decoupled architecture, and professional testing workflows.
+
+## About
+
+This project solves the friction of manual volunteer sign-up coordination. Organizations can create events, define volunteer activities and shifts, and volunteers can register for shifts they want to work. Organizers have role-based access to manage events and track registrations.
 
 ## Technology Stack
 
-* **Backend:** Ruby on Rails 8.1.3
-* **Frontend:** React with TypeScript
-* **Testing:** RSpec (Rails), Vitest (React)
-* **Ruby version:** 3.4.3
+**Backend:**
+- Ruby on Rails 8.1.3
+- PostgreSQL database
+- RSpec for testing
+<!-- - Security: bcrypt, JWT authentication (OAuth and 2FA support planned) -->
+
+**Frontend:**
+- React 19 with TypeScript
+- Vite for development and building
+- Vitest for testing
+- React Router for navigation
+- Bootstrap for UI
+
+**DevOps & Deployment:**
+- Docker for containerization
+- GitHub Actions for CI/CD
+- Vercel/Netlify ready for frontend deployment
+<!-- - AWS services (RDS, S3, CloudWatch) for production backend -->
+
+**Development Tools:**
+- Ruby 3.4.3, Node.js 26.5.0
+- Bundler, Yarn for dependency management
+- RuboCop for linting
+- Brakeman for security scanning
+
+## Features
+
+**Current plan (MVP):**
+- User authentication with role-based access control (organizer, shift lead, volunteer)
+- Event creation and management
+- Activity and shift definitions with capacity tracking
+- Volunteer registration for shifts
+- Dashboard views based on user role
+
+**Phase 2 plan:**
+- OAuth login (Google, GitHub)
+- Two-factor authentication
+- Analytics dashboard with volunteer engagement metrics
+- Churn prediction model for volunteer retention
+- Shift reminder notifications
+- Advanced RBAC permissions
 
 ## Getting Started
 
 ### Prerequisites
 
-* Ruby 3.4.3
-* Node.js 26.5.0
-* Bundler
-* Yarn
+- Ruby 3.4.3 ([rbenv](https://github.com/rbenv/rbenv) recommended)
+- Node.js 26.5.0
+- PostgreSQL 16+
+- Bundler
+- Yarn
 
 ### Setup
 
-1. **Clone the repository:**
+1. **Clone and install:**
    ```bash
    git clone https://github.com/dcalhoun286/volunteer_event_signup.git
    cd volunteer_event_signup
    ```
 
-2. **Run the setup script:**
-   To run setup without starting the server (useful for resetting the dev database):
+2. **Install dependencies:**
+   ```bash
+   bundle install
+   yarn install
+   ```
+
+3. **Setup database:**
+   ```bash
+   bin/setup
+   ```
+   Or without starting the server:
    ```bash
    bin/setup --skip-server
    ```
 
-## Running Tests
+## Running the Application
 
-### Frontend Tests
-Run React/TypeScript tests using Vitest:
+### Development (Recommended)
 ```bash
-yarn test
+./bin/dev
+```
+This starts two processes via `Procfile.dev`:
+- Rails API on `http://localhost:3001`
+- Vite dev server on `http://localhost:3000` (with hot reload and SPA routing)
+
+Visit `http://localhost:3000` in your browser. React makes API calls to `http://localhost:3001/api/...`
+
+### Manual Setup (if not using Procfile)
+
+**Terminal 1 - Rails API:**
+```bash
+bundle exec rails s -p 3001
 ```
 
-### Backend Tests
-Run RSpec tests:
+**Terminal 2 - Vite dev server:**
 ```bash
-bundle exec rspec
+yarn vite
 ```
 
-### Run All Tests
+## Testing
+
+### Run all tests
 ```bash
 yarn test && bundle exec rspec
 ```
 
-## Development
-
-### Start the development server
-
-Option 1: Use the Procfile (recommended):
+### Frontend tests only
 ```bash
-./bin/dev
+yarn test
 ```
 
-Option 2: Run Rails and frontend separately:
-
-Terminal 1 - Start Rails server:
+### Backend tests only
 ```bash
-bundle exec rails s
+bundle exec rspec
 ```
 
-Terminal 2 - Start frontend development server:
+### Linting & Security
 ```bash
-yarn dev
+bundle exec rubocop -f github       # Lint backend code
+bin/brakeman --no-pager             # Security scan
+bin/bundler-audit                   # Check dependencies for vulnerabilities
 ```
-
-The application will be available at `http://localhost:3000`
 
 ## Project Structure
 
 ```
-├── app/                 # Rails application code
-├── src/                 # React/TypeScript source code
-├── config/              # Rails configuration
-├── db/                  # Database migrations and seeds
+volunteer_event_signup/
+├── app/                 # Rails backend code
+├── src/                 # React/TypeScript frontend code
+├── db/
+│   ├── migrate/         # Database migrations
+│   └── seeds.rb         # Sample data
 ├── spec/                # RSpec tests
+├── config/              # Rails configuration
+├── .github/workflows/   # CI/CD pipeline
 ├── Gemfile              # Ruby dependencies
+├── package.json         # Node dependencies
+├── docker-compose.yml   # Local Docker setup
 ├── package.json         # Node.js dependencies
-└── tsconfig.json        # TypeScript configuration
+├── tsconfig.json        # TypeScript configuration
+├── vitest.config.ts     # Vitest configuration
+└── vite.config.mts       # Vite configuration
 ```
+
+## Architecture
+
+The application uses a **decoupled frontend/backend architecture:**
+
+- **Frontend** (React/TypeScript) builds independently and deploys to Vercel/Netlify
+- **Backend** (Rails) runs as a containerized API service
+<!-- - **Database** (PostgreSQL) hosted on AWS RDS -->
+<!-- - **Logging & Monitoring** via CloudWatch and ELK stack -->
+<!-- - Communication via REST API (HTTP) -->
+
+This separation allows independent scaling and deployment of frontend and backend.
+
+<!-- ## Database Schema
+
+Key entities:
+- **Users:** Organizers, shift leads, and volunteers
+- **Events:** Organized volunteer events
+- **Activities:** Types of work within an event (e.g., "Runner check-in", "First aid")
+- **Shifts:** Time slots for volunteer work with capacity limits
+- **VolunteerRegistrations:** Tracks who signed up for which shifts
+
+See `db/schema.rb` for the complete schema. -->
+
+## CI/CD Pipeline
+
+GitHub Actions runs automatically on every push and PR:
+
+1. **Security scans** (Brakeman, Bundler Audit)
+2. **Linting** (RuboCop)
+3. **Backend tests** (RSpec)
+4. **Frontend tests** (Vitest)
+5. **Frontend build** (React build to `dist/`)
+
+All checks must pass before merging to `main`.
+
+## Development Workflow
+
+1. Create a branch: `git checkout -b feature/your-feature`
+2. Make changes and commit with signed commits
+3. Push to GitHub and open a PR against `main`
+4. All CI checks must pass
+5. Merge when ready
+
+**Branch protection rules on `main`:**
+- Require signed commits
+- Require CI/CD jobs to pass
+- Linear history (no merge commits)
+- Restrict deletions and force pushes
 
 ## Deployment
 
-See `.kamal/` configuration for deployment setup.
+### Local Docker
+```bash
+docker-compose up
+```
+
+### Frontend (Vercel/Netlify)
+The frontend builds to `dist/` and deploys automatically on push to `main` (setup in progress).
+
+### Backend
+Containerized Rails app deploys to container registry (setup in progress).
+
+## Contributing
+
+This is a personal project, but if you'd like to contribute ideas, open an issue or discussion.
 
 ## License
 
-This project is licensed under the GPL-3.0 License - see the LICENSE file for details.
+GPL-3.0 License. <!-- Free and open-source for nonprofits and volunteer coordination. --> See [LICENSE](LICENSE) for details.
+
+## Author
+
+Dar-Ci Calhoun — [GitHub](https://github.com/dcalhoun286) | [LinkedIn](https://linkedin.com/in/dlcalhoun)
