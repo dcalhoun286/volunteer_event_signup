@@ -1,6 +1,6 @@
 class CreateUserRoles < ActiveRecord::Migration[8.1]
   def change
-    create_enum :user_role_enum, ["organizer", "shift_lead", "volunteer"], if_not_exists: true
+    create_enum :user_role_enum, [ "organizer", "shift_lead", "volunteer" ], if_not_exists: true
 
     create_table :user_roles do |t|
       t.references :user, null: false, foreign_key: true
@@ -9,6 +9,6 @@ class CreateUserRoles < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :user_roles, [:user_id, :role], unique: true
+    add_index :user_roles, [ :user_id, :role ], unique: true
   end
 end

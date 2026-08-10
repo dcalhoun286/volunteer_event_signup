@@ -11,6 +11,6 @@ class CreateOauthCredentials < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :oauth_credentials, [:user_id, :provider], unique: true
+    add_index :oauth_credentials, [ :user_id, :provider ], unique: true
   end
 end

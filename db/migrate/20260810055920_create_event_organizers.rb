@@ -1,6 +1,6 @@
 class CreateEventOrganizers < ActiveRecord::Migration[8.1]
   def change
-    create_enum :event_organizer_enum, ["organizer", "shift_lead"], if_not_exists: true
+    create_enum :event_organizer_enum, [ "organizer", "shift_lead" ], if_not_exists: true
 
     create_table :event_organizers do |t|
       t.references :event, null: false, foreign_key: true
@@ -10,6 +10,6 @@ class CreateEventOrganizers < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :event_organizers, [:event_id, :user_id], unique: true
+    add_index :event_organizers, [ :event_id, :user_id ], unique: true
   end
 end

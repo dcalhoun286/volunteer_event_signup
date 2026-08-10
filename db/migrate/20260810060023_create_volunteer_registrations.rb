@@ -1,6 +1,6 @@
 class CreateVolunteerRegistrations < ActiveRecord::Migration[8.1]
   def change
-    create_enum :registration_status_enum, ["confirmed", "pending", "cancelled", "no_show"], if_not_exists: true
+    create_enum :registration_status_enum, [ "confirmed", "pending", "cancelled", "no_show" ], if_not_exists: true
 
     create_table :volunteer_registrations do |t|
       t.references :shift, null: false, foreign_key: true
@@ -12,6 +12,6 @@ class CreateVolunteerRegistrations < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :volunteer_registrations, [:shift_id, :user_id], unique: true
+    add_index :volunteer_registrations, [ :shift_id, :user_id ], unique: true
   end
 end
