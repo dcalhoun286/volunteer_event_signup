@@ -15,6 +15,19 @@ RSpec.describe User, type: :model do
 
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_uniqueness_of(:email) }
-    it { is_expected.to validate_presence_of(:password_digest) }
+  end
+
+  describe "has_secure_password" do
+    let(:user) { build(:user, password: "password123") }
+
+    it "authenticates with correct password" do
+      user.save
+      expect(user.authenticate("password123")).to eq(user)
+    end
+
+    it "failse authentication with wrong password" do
+      user.save
+      expect(user.authenticate("wrongpassword")).to be_falsey
+    end
   end
 end

@@ -9,10 +9,11 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # API routes will go here
-  # namespace :api do
-  #   resources :events
-  #   resources :shifts
-  #   etc.
-  # end
+  # API routes go here
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [ :create ]
+      post "/users/login", to: "users#login"
+    end
+  end
 end
