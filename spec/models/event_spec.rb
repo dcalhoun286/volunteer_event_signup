@@ -9,7 +9,7 @@ RSpec.describe Event, type: :model do
 
   describe "validations" do
     subject { build(:event) }
-    
+
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:start_date) }
   end
