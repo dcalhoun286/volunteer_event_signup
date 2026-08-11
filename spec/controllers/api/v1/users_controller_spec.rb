@@ -68,7 +68,7 @@ RSpec.describe Api::V1::UsersController do
         {
           user: {
             email: user.email,
-            password: "password123",
+            password: "password123"
           }
         }
       end
