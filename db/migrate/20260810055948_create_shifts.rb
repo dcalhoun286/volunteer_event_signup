@@ -6,7 +6,7 @@ class CreateShifts < ActiveRecord::Migration[8.1]
       t.datetime :start_time, null: false
       t.datetime :end_time, null: false
       t.integer :capacity, null: false
-      t.references :shift_lead, foreign_key: { to_table: :users }
+      t.references :shift_lead, foreign_key: { to_table: :users, on_delete: :nullify }
       t.string :location
       t.jsonb :metadata, default: {}
 

@@ -5,7 +5,7 @@ class CreateEventOrganizers < ActiveRecord::Migration[8.1]
     create_table :event_organizers do |t|
       t.references :event, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
-      t.enum :permissions, enum_type: :event_organizer_enum, default: "shift_lead"
+      t.enum :role, enum_type: :event_organizer_enum, default: "shift_lead", null: false
 
       t.timestamps
     end
