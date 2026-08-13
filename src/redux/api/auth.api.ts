@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface RegisterRequest {
+export interface RegisterRequest {
     email: string;
     password: string;
     password_confirmation: string;
@@ -8,12 +8,12 @@ interface RegisterRequest {
     last_name: string;
 }
 
-interface LoginRequest {
+export interface LoginRequest {
     email: string;
     password: string;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
     token: string;
 }
 

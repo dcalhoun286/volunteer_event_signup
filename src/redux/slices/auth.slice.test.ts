@@ -1,15 +1,24 @@
 import authReducer, { setToken, setUser, logout } from "./auth.slice";
 
-const localStorageMock = {
-    getItem: vi.fn(),
-    setItem: vi.fn(),
-    removeItem: vi.fn(),
-    clear: vi.fn(),
-}
-globalThis.localStorage = localStorageMock as any;
+import type { User } from "./auth.slice";
+import type { AuthState } from "./auth.slice";
 
 describe("authSlice", () => {
-    const initialState = {
+    beforeEach(() => {
+        const localStorageMock = {
+            getItem: vi.fn(),
+            setItem: vi.fn(),
+            removeItem: vi.fn(),
+            clear: vi.fn(),
+        }
+        globalThis.localStorage = localStorageMock as any;
+    });
+
+    afterAll(() => {
+        vi.clearAllMocks();
+    });
+
+    const initialState: AuthState = {
         token: null,
         user: null,
         isAuthenticated: false,
@@ -31,7 +40,7 @@ describe("authSlice", () => {
 
     describe("setUser", () => {
         it("should set user info", () => {
-            const user = { id: "1", email: "test@example.com" };
+            const user: User = { id: "1", email: "test@example.com" };
             const state = authReducer(initialState, setUser(user));
 
             expect(state.user).toEqual(user);
@@ -40,7 +49,7 @@ describe("authSlice", () => {
 
     describe("logout", () => {
         it("should clear token, user, and auth status", () => {
-            const stateWithAuth = {
+            const stateWithAuth: AuthState = {
                 token: "test-token-456",
                 user: { id: "1", email: "test@example.com" },
                 isAuthenticated: true,
