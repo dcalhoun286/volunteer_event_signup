@@ -144,7 +144,6 @@ volunteer_event_signup/
 ├── config/              # Rails configuration
 ├── .github/workflows/   # CI/CD pipeline
 ├── Gemfile              # Ruby dependencies
-├── package.json         # Node dependencies
 ├── docker-compose.yml   # Local Docker setup
 ├── package.json         # Node.js dependencies
 ├── tsconfig.json        # TypeScript configuration
