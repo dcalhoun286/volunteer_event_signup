@@ -18,9 +18,6 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Manually load services
-Dir.glob("#{__dir__}/../app/services/**/*.rb").each { |file| require file }
-
 module VolunteerEventSignup
   class Application < Rails::Application
     config.api_only = true
@@ -44,3 +41,6 @@ module VolunteerEventSignup
     config.generators.system_tests = nil
   end
 end
+
+# Manually load services
+Dir.glob("#{__dir__}/../app/services/**/*.rb").each { |file| require file }
