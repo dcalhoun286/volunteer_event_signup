@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
     token = cookies.encrypted[:auth_token]
 
     begin
-      decoded = JsonWebToken.decode(token)
+      decoded = ::Services::Auth::JsonWebToken.decode(token)
       @current_user = User.find(decoded["user_id"])
     rescue JWT::DecodeError, ActiveRecord::RecordNotFound
       render json: { error: "Unauthorized" }, status: :unauthorized

@@ -6,7 +6,7 @@ module Api
             def create
                 user = User.new(user_params)
                 if user.save
-                    token = JsonWebToken.encode(user_id: user.id)
+                    token = ::Services::Auth::JsonWebToken.encode(user_id: user.id)
                     cookies.encrypted[:auth_token] = {
                         value: token,
                         httponly: true,
@@ -24,7 +24,7 @@ module Api
             def login
                 user = User.find_by(email: login_params[:email])
                 if user&.authenticate(login_params[:password])
-                    token = JsonWebToken.encode(user_id: user.id)
+                    token = ::Services::Auth::JsonWebToken.encode(user_id: user.id)
                     cookies.encrypted[:auth_token] = {
                         value: token,
                         httponly: true,
