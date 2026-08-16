@@ -24,7 +24,7 @@ module Api
             def login
                 user = User.find_by(email: login_params[:email])
                 if user&.authenticate(login_params[:password])
-                    token = JsonWebToken.encode(user_id: user.id, exp: 1.hour.from_now)
+                    token = JsonWebToken.encode(user_id: user.id)
                     cookies.encrypted[:auth_token] = {
                         value: token,
                         httponly: true,
