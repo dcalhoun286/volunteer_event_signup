@@ -21,14 +21,19 @@ RSpec.describe Api::V1::UsersController do
         }.to change(User, :count).by(1)
       end
 
-      it "returns a token" do
+      it "sets an HTTP-only cookie" do
         post :create, params: valid_params
-        expect(JSON.parse(response.body)).to have_key("token")
+        expect(response.cookies[ "auth_token" ]).to be_present
       end
 
       it "returns 201 status" do
         post :create, params: valid_params
         expect(response).to have_http_status(:created)
+      end
+
+      it "returns success JSON" do
+        post :create, params: valid_params
+        expect(JSON.parse(response.body)).to have_key("success")
       end
     end
 
@@ -61,7 +66,7 @@ RSpec.describe Api::V1::UsersController do
   end
 
   describe "#login" do
-    let(:user) { create(:user, password_digest: BCrypt::Password.create("password123")) }
+    let(:user) { create(:user, password: "password123") }
 
     context "with valid credentials" do
       let(:valid_params) do
@@ -73,9 +78,19 @@ RSpec.describe Api::V1::UsersController do
         }
       end
 
-      it "returns a token" do
+      it "sets an HTTP-only cookie" do
+        post :login, params: valid_params
+        expect(response.cookies["auth_token"]).to be_present
+      end
+
+      it "returns 200 status" do
         post :login, params: valid_params
         expect(response).to have_http_status(:ok)
+      end
+
+      it "returns success JSON" do
+        post :login, params: valid_params
+        expect(JSON.parse(response.body)).to have_key("success")
       end
     end
 
@@ -89,15 +104,51 @@ RSpec.describe Api::V1::UsersController do
         }
       end
 
-      it "does not return a token" do
+      it "does not set a cookie" do
         post :login, params: invalid_params
-        expect(JSON.parse(response.body)).not_to have_key("token")
+        expect(response.cookies["auth_token"]).to be_nil
       end
 
       it "returns 401 status" do
         post :login, params: invalid_params
         expect(response).to have_http_status(:unauthorized)
       end
+
+      it "returns error message" do
+        post :login, params: invalid_params
+        body = JSON.parse(response.body)
+        expect(body["error"]).to eq("Incorrect username and/or password")
+      end
+    end
+  end
+
+  describe "#logout" do
+    let(:user) { create(:user, password: "password123") }
+
+    before do
+      # Login to set the cookie before logout tests
+      login_params = {
+        user: {
+          email: user.email,
+          password: "password123"
+        }
+      }
+      post :login, params: login_params
+    end
+
+    it "clears the auth_token cookie" do
+      post :logout, params: {}
+      expect(response.cookies[ "auth_token" ]).to be_nil
+    end
+
+    it "returns 200 status" do
+      post :logout, params: {}
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "returns success JSON" do
+      post :logout, params: {}
+      expect(JSON.parse(response.body)).to have_key("success")
     end
   end
 end
