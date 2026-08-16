@@ -23,7 +23,7 @@ RSpec.describe Api::V1::UsersController do
 
       it "sets an HTTP-only cookie" do
         post :create, params: valid_params
-        expect(response.cookies[ "auth_token" ]).to be_present
+        expect(response.cookies["auth_token"]).to be_present
       end
 
       it "returns 201 status" do
@@ -138,7 +138,7 @@ RSpec.describe Api::V1::UsersController do
 
     it "clears the auth_token cookie" do
       post :logout, params: {}
-      expect(response.cookies[ "auth_token" ]).to be_nil
+      expect(response.cookies["auth_token"]).to be_nil
     end
 
     it "returns 200 status" do

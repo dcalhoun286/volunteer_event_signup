@@ -7,9 +7,9 @@ module Api
                 user = User.new(user_params)
                 if user.save
                     token = JsonWebToken.encode(user_id: user.id)
-                    cookies.encrypted[:auth_token] = { 
-                        value: token, 
-                        httponly: true, 
+                    cookies.encrypted[:auth_token] = {
+                        value: token,
+                        httponly: true,
                         secure: Rails.env.production?,
                         same_site: Rails.env.production? ? :strict : :lax,
                         domain: cookie_domain,
@@ -25,9 +25,9 @@ module Api
                 user = User.find_by(email: login_params[:email])
                 if user&.authenticate(login_params[:password])
                     token = JsonWebToken.encode(user_id: user.id, exp: 1.hour.from_now)
-                    cookies.encrypted[:auth_token] = { 
-                        value: token, 
-                        httponly: true, 
+                    cookies.encrypted[:auth_token] = {
+                        value: token,
+                        httponly: true,
                         secure: Rails.env.production?,
                         same_site: Rails.env.production? ? :strict : :lax,
                         domain: cookie_domain,
@@ -67,7 +67,7 @@ module Api
                 when "development"
                     "localhost"
                 when "production"
-                    ENV[ "COOKIE_DOMAIN" ] || "yourdomain.com"
+                    ENV["COOKIE_DOMAIN"] || "yourdomain.com"
                 end
             end
         end
