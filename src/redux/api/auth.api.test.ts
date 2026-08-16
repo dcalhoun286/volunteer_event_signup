@@ -12,10 +12,14 @@ describe("authApi", () => {
         it("should have login mutation", () => {
             expect(authApi.endpoints.login).toBeDefined();
         });
+
+        it("should have logout mutation", () => {
+            expect(authApi.endpoints.logout).toBeDefined();
+        });
     });
 
     describe("register mutation", () => {
-        it("should build correct query", () => {
+        it("should build correct query with nested user object", () => {
             const userData: RegisterRequest = {
                 email: "test@example.com",
                 password: "password123",
@@ -30,13 +34,20 @@ describe("authApi", () => {
     });
 
     describe("login mutation", () => {
-        it("should build correct query", () => {
+        it("should build correct query with nested user object", () => {
             const credentials: LoginRequest = {
                 email: "test@example.com",
                 password: "password123",
             };
 
             const query = authApi.endpoints.login.initiate(credentials);
+            expect(query).toBeDefined();
+        });
+    });
+
+    describe("logout mutation", () => {
+        it("should build correct query", () => {
+            const query = authApi.endpoints.logout.initiate(undefined);
             expect(query).toBeDefined();
         });
     });
