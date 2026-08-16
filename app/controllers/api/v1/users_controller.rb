@@ -1,7 +1,7 @@
 module Api
     module V1
         class UsersController < ApplicationController
-            # skip_before action :authenticate_request, only: [:create, :login]
+            skip_before_action :authenticate_request, only: [:create, :login]
 
             def create
                 user = User.new(user_params)
@@ -40,8 +40,12 @@ module Api
             end
 
             def logout
-                cookies.delete(:auth_token)
-                render json: { success: true }, status: :ok
+                if @current_user
+                    cookies.delete(:auth_token)
+                    render json: { success: true }, status: :ok
+                else
+                    render json: { error: "Unauthorized" }, status: :unauthorized
+                end
             end
 
             private

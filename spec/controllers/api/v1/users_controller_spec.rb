@@ -125,30 +125,45 @@ RSpec.describe Api::V1::UsersController do
   describe "#logout" do
     let(:user) { create(:user, password: "password123") }
 
-    before do
-      # Login to set the cookie before logout tests
-      login_params = {
-        user: {
-          email: user.email,
-          password: "password123"
+    context "when authenticated" do
+      before do
+        # Login to set the cookie before logout tests
+        login_params = {
+          user: {
+            email: user.email,
+            password: "password123"
+          }
         }
-      }
-      post :login, params: login_params
+        post :login, params: login_params
+      end
+
+      it "clears the auth_token cookie" do
+        post :logout, params: {}
+        expect(response.cookies["auth_token"]).to be_nil
+      end
+
+      it "returns 200 status" do
+        post :logout, params: {}
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns success JSON" do
+        post :logout, params: {}
+        expect(JSON.parse(response.body)).to have_key("success")
+      end
     end
 
-    it "clears the auth_token cookie" do
-      post :logout, params: {}
-      expect(response.cookies["auth_token"]).to be_nil
-    end
+    context "when not authenticated" do
+      it "returns 401 status" do
+        post :logout, params: {}
+        expect(response).to have_http_status(:unauthorized)
+      end
 
-    it "returns 200 status" do
-      post :logout, params: {}
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "returns success JSON" do
-      post :logout, params: {}
-      expect(JSON.parse(response.body)).to have_key("success")
+      it "returns error message" do
+        post :logout, params: {}
+        body = JSON.parse(response.body)
+        expect(body["error"]).to eq("Unauthorized")
+      end
     end
   end
 end
