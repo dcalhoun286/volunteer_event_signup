@@ -41,6 +41,3 @@ module VolunteerEventSignup
     config.generators.system_tests = nil
   end
 end
-
-# Manually load services
-Dir.glob("#{__dir__}/../app/services/**/*.rb").each { |file| require file }
