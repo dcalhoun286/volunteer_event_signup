@@ -6,7 +6,7 @@ import { useCallback, useState } from "react";
  *     - toggle: The current boolean state (initial state is set to false)
  *     - handleToggle: function to toggle between true and false
  */
-export const useToggle = () => {
+export const useToggle = (): { toggle: boolean; handleToggle: () => void; } => {
     const [ toggle, setToggle ] = useState<boolean>(false);
 
     const handleToggle = useCallback(() => {
