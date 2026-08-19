@@ -1,7 +1,11 @@
-export const Main = (_props: any) => {
+interface MainProps {
+    children: React.ReactNode;
+}
+
+export const Main = ({ children }: MainProps) => {
     return (
         <main className="min-vh-100">
-            {_props.children}
+            {children}
         </main>
     );
 };

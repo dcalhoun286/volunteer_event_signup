@@ -1,10 +1,12 @@
 import { authApi } from "./auth.api";
-
-import type { RegisterRequest } from "./auth.api";
-import type { LoginRequest } from "./auth.api";
+import type { RegisterRequest, LoginRequest } from "./auth.api";
 
 describe("authApi", () => {
     describe("endpoints", () => {
+        it("should have getCurrentUser query", () => {
+            expect(authApi.endpoints.getCurrentUser).toBeDefined();
+        });
+
         it("should have register mutation", () => {
             expect(authApi.endpoints.register).toBeDefined();
         });
@@ -15,6 +17,13 @@ describe("authApi", () => {
 
         it("should have logout mutation", () => {
             expect(authApi.endpoints.logout).toBeDefined();
+        });
+    });
+
+    describe("getCurrentUser query", () => {
+        it("should build correct query", () => {
+            const query = authApi.endpoints.getCurrentUser.initiate();
+            expect(query).toBeDefined();
         });
     });
 

@@ -9,5 +9,10 @@ export default defineConfig({
       '/api': 'http://localhost:3001'
     }
   },
-  publicDir: 'dist'
-})
+  publicDir: 'dist',
+  test: {
+    env: {
+      VITE_API_URL: 'http://localhost:3001',
+    },
+  },
+});

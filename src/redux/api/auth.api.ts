@@ -14,18 +14,21 @@ export interface LoginRequest {
 }
 
 export interface AuthResponse {
-    token: string;
+    success: boolean;
 }
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3001/api/v1";
 
 export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl,
-        credentials: "include"
+        credentials: "include",
     }),
     endpoints: (builder) => ({
+        getCurrentUser: builder.query<{ success: boolean }, void>({
+            query: () => "users/me",
+        }),
         register: builder.mutation<AuthResponse, RegisterRequest>({
             query: (userData) => ({
                 url: "/users",
@@ -40,7 +43,7 @@ export const authApi = createApi({
                 body: { user: credentials },
             }),
         }),
-        logout: builder.mutation<void, void>({
+        logout: builder.mutation<AuthResponse, void>({
             query: () => ({
                 url: "/users/logout",
                 method: "POST",
@@ -49,4 +52,9 @@ export const authApi = createApi({
     }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useLogoutMutation } = authApi;
+export const {
+    useGetCurrentUserQuery,
+    useRegisterMutation,
+    useLoginMutation,
+    useLogoutMutation
+} = authApi;

@@ -23,7 +23,7 @@ jobs:
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
 
-  lint:
+  lint_backend:
     runs-on: ubuntu-latest
     env:
       RUBOCOP_CACHE_ROOT: tmp/rubocop
@@ -48,6 +48,26 @@ jobs:
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
+  lint_frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+ 
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: yarn
+ 
+      - name: Install dependencies
+        run: yarn install
+ 
+      - name: Lint JavaScript/TypeScript
+        run: yarn lint
+ 
+      - name: Format check
+        run: yarn format:check
 
   test:
     runs-on: ubuntu-latest

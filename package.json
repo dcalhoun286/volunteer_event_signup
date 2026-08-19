@@ -1,7 +1,9 @@
 {
   "name": "app",
+  "type": "module",
   "private": true,
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
@@ -9,9 +11,17 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@typescript-eslint/parser": "^8.67.0",
     "@vitejs/plugin-react": "^6.0.5",
     "esbuild": "^0.27.4",
+    "eslint": "^10.8.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.11.0",
     "jsdom": "^30.0.1",
+    "prettier": "^3.9.6",
+    "typescript": "5.6",
     "vite": "^8.2.1",
     "vitest": "^4.1.10"
   },
@@ -22,7 +32,12 @@
     "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./dist/application.css --no-source-map --load-path=node_modules",
     "build:css:prefix": "postcss ./dist/application.css --use=autoprefixer --output=./dist/application.css",
     "build:css": "yarn build:css:compile && yarn build:css:prefix",
-    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\""
+    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
@@ -32,6 +47,7 @@
     "autoprefixer": "^10.4.27",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
+    "msw": "^2.15.0",
     "nodemon": "^3.1.14",
     "postcss": "^8.5.8",
     "postcss-cli": "^11.0.1",
