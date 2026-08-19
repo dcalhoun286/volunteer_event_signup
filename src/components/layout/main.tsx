@@ -1,11 +1,7 @@
 interface MainProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const Main = ({ children }: MainProps) => {
-    return (
-        <main className="min-vh-100">
-            {children}
-        </main>
-    );
+  return <main className="min-vh-100">{children}</main>;
 };
