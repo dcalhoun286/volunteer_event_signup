@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
 
 /**
  * A hook for managing boolean toggle state that returns an object containing the following properties:
@@ -6,12 +6,12 @@ import { useCallback, useState } from "react";
  *     - toggle: The current boolean state (initial state is set to false)
  *     - handleToggle: function to toggle between true and false
  */
-export const useToggle = (): { toggle: boolean; handleToggle: () => void; } => {
-    const [ toggle, setToggle ] = useState<boolean>(false);
+export const useToggle = (): { toggle: boolean; handleToggle: () => void } => {
+  const [toggle, setToggle] = useState<boolean>(false);
 
-    const handleToggle = useCallback(() => {
-        setToggle(prev => !prev);
-    }, []);
+  const handleToggle = useCallback(() => {
+    setToggle((prev) => !prev);
+  }, []);
 
-    return { toggle, handleToggle };
+  return { toggle, handleToggle };
 };

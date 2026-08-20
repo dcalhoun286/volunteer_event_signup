@@ -5,6 +5,14 @@ if gem list --no-installed --exact --silent foreman; then
   gem install foreman
 fi
 
+# Reset database
+echo "Dropping and resetting database..."
+bin/rails db:drop db:create db:migrate
+
+# Seed database
+echo "Seeding database..."
+bin/rails db:seed
+
 # Default to port 3000 if not specified
 export PORT="${PORT:-3000}"
 

@@ -3,6 +3,14 @@ module Api
         class UsersController < ApplicationController
             skip_before_action :authenticate_request, only: [ :create, :login ]
 
+            def me
+                if @current_user
+                    render json: { success: true }, status: :ok
+                else
+                    render json: { error: "Unauthorized" }, status: :unauthorized
+                end
+            end
+
             def create
                 user = User.new(user_params)
                 if user.save
@@ -41,7 +49,11 @@ module Api
 
             def logout
                 if @current_user
-                    cookies.delete(:auth_token)
+                    cookies.delete(:auth_token, {
+                        httponly: true,
+                        same_site: Rails.env.production? ? :strict : :lax,
+                        domain: cookie_domain
+                    })
                     render json: { success: true }, status: :ok
                 else
                     render json: { error: "Unauthorized" }, status: :unauthorized

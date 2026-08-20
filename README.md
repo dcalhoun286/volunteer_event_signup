@@ -9,12 +9,15 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 ## Technology Stack
 
 **Backend:**
+
 - Ruby on Rails 8.1.3
 - PostgreSQL database
 - RSpec for testing
+
 <!-- - Security: bcrypt, JWT authentication (OAuth and 2FA support planned) -->
 
 **Frontend:**
+
 - React 19 with TypeScript
 - Vite for development and building
 - Vitest for testing
@@ -22,12 +25,15 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 - Bootstrap for UI
 
 **DevOps & Deployment:**
+
 - Docker for containerization
 - GitHub Actions for CI/CD
 - Vercel/Netlify ready for frontend deployment
+
 <!-- - AWS services (RDS, S3, CloudWatch) for production backend -->
 
 **Development Tools:**
+
 - Ruby 3.4.3, Node.js 26.5.0
 - Bundler, Yarn for dependency management
 - RuboCop for linting
@@ -36,6 +42,7 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 ## Features
 
 **Current plan (MVP):**
+
 - User authentication with role-based access control (organizer, shift lead, volunteer)
 - Event creation and management
 - Activity and shift definitions with capacity tracking
@@ -43,6 +50,7 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 - Dashboard views based on user role
 
 **Phase 2 plan:**
+
 - OAuth login (Google, GitHub)
 - Two-factor authentication
 - Analytics dashboard with volunteer engagement metrics
@@ -63,12 +71,14 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 ### Setup
 
 1. **Clone and install:**
+
    ```bash
    git clone https://github.com/dcalhoun286/volunteer_event_signup.git
    cd volunteer_event_signup
    ```
 
 2. **Install dependencies:**
+
    ```bash
    bundle install
    yarn install
@@ -86,10 +96,13 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 ## Running the Application
 
 ### Development (Recommended)
+
 ```bash
 ./bin/dev
 ```
+
 This starts two processes via `Procfile.dev`:
+
 - Rails API on `http://localhost:3001`
 - Vite dev server on `http://localhost:3000` (with hot reload and SPA routing)
 
@@ -98,11 +111,13 @@ Visit `http://localhost:3000` in your browser. React makes API calls to `http://
 ### Manual Setup (if not using Procfile)
 
 **Terminal 1 - Rails API:**
+
 ```bash
 bundle exec rails s -p 3001
 ```
 
 **Terminal 2 - Vite dev server:**
+
 ```bash
 yarn vite
 ```
@@ -110,21 +125,25 @@ yarn vite
 ## Testing
 
 ### Run all tests
+
 ```bash
 yarn test && bundle exec rspec
 ```
 
 ### Frontend tests only
+
 ```bash
 yarn test
 ```
 
 ### Backend tests only
+
 ```bash
 bundle exec rspec
 ```
 
 ### Linting & Security
+
 ```bash
 bundle exec rubocop -f github       # Lint backend code
 bin/brakeman --no-pager             # Security scan
@@ -157,6 +176,7 @@ The application uses a **decoupled frontend/backend architecture:**
 
 - **Frontend** (React/TypeScript) builds independently and deploys to Vercel/Netlify
 - **Backend** (Rails) runs as a containerized API service
+
 <!-- - **Database** (PostgreSQL) hosted on AWS RDS -->
 <!-- - **Logging & Monitoring** via CloudWatch and ELK stack -->
 <!-- - Communication via REST API (HTTP) -->
@@ -195,6 +215,7 @@ All checks must pass before merging to `main`.
 5. Merge when ready
 
 **Branch protection rules on `main`:**
+
 - Require signed commits
 - Require CI/CD jobs to pass
 - Linear history (no merge commits)
@@ -203,14 +224,17 @@ All checks must pass before merging to `main`.
 ## Deployment
 
 ### Local Docker
+
 ```bash
 docker-compose up
 ```
 
 ### Frontend (Vercel/Netlify)
+
 The frontend builds to `dist/` and deploys automatically on push to `main` (setup in progress).
 
 ### Backend
+
 Containerized Rails app deploys to container registry (setup in progress).
 
 ## Contributing
