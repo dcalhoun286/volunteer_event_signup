@@ -13,6 +13,7 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 - Ruby on Rails 8.1.3
 - PostgreSQL database
 - RSpec for testing
+  - test coverage with `SimpleCove`
 
 <!-- - Security: bcrypt, JWT authentication (OAuth and 2FA support planned) -->
 
@@ -21,6 +22,7 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 - React 19 with TypeScript
 - Vite for development and building
 - Vitest for testing
+  - test coverage with `@vitest-coverage/v8`
 - React Router for navigation
 - Bootstrap for UI
 
@@ -98,7 +100,7 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 ### Development (Recommended)
 
 ```bash
-./bin/dev
+bin/dev
 ```
 
 This starts two processes via `Procfile.dev`:
@@ -145,7 +147,11 @@ bundle exec rspec
 ### Linting & Security
 
 ```bash
-bundle exec rubocop -f github       # Lint backend code
+bundle exec rubocop                 # Lint backend code
+bundle exec rubocop --fix           # Fix auto-fixable backend linting issues
+yarn lint                           # Lint frontend code
+yarn lint:fix                       # Fix auto-fixable frontend linting issues
+yarn format:check                   # Check frontend code against formatting rules
 bin/brakeman --no-pager             # Security scan
 bin/bundler-audit                   # Check dependencies for vulnerabilities
 ```
@@ -167,7 +173,7 @@ volunteer_event_signup/
 ├── package.json         # Node.js dependencies
 ├── tsconfig.json        # TypeScript configuration
 ├── vitest.config.ts     # Vitest configuration
-└── vite.config.mts       # Vite configuration
+└── vite.config.mts      # Vite configuration
 ```
 
 ## Architecture
@@ -177,9 +183,9 @@ The application uses a **decoupled frontend/backend architecture:**
 - **Frontend** (React/TypeScript) builds independently and deploys to Vercel/Netlify
 - **Backend** (Rails) runs as a containerized API service
 
-<!-- - **Database** (PostgreSQL) hosted on AWS RDS -->
+ - **Database** PostgreSQL <!-- hosted on AWS RDS -->
 <!-- - **Logging & Monitoring** via CloudWatch and ELK stack -->
-<!-- - Communication via REST API (HTTP) -->
+ - Communication via REST API (HTTP)
 
 This separation allows independent scaling and deployment of frontend and backend.
 
@@ -199,7 +205,7 @@ See `db/schema.rb` for the complete schema. -->
 GitHub Actions runs automatically on every push and PR:
 
 1. **Security scans** (Brakeman, Bundler Audit)
-2. **Linting** (RuboCop)
+2. **Linting** (RuboCop, ESLint)
 3. **Backend tests** (RSpec)
 4. **Frontend tests** (Vitest)
 5. **Frontend build** (React build to `dist/`)
