@@ -26,7 +26,7 @@ export const authApi = createApi({
     credentials: 'include',
   }),
   endpoints: (builder) => ({
-    getCurrentUser: builder.query<{ success: boolean }, void>({
+    getCurrentUser: builder.query<AuthResponse, void>({
       query: () => 'users/me',
     }),
     register: builder.mutation<AuthResponse, RegisterRequest>({

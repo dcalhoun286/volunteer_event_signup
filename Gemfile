@@ -77,4 +77,5 @@ end
 group :test do
   gem "shoulda-matchers", "~> 8.0"
   gem "factory_bot_rails"
+  gem "simplecov"
 end
