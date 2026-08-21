@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { setupServer } from 'msw/node';
-import { vi } from 'vitest';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './redux/slices/auth.slice';
@@ -30,7 +29,8 @@ const createTestStore = (isAuthenticated = false) => {
 
 const renderWithRedux = (component: ReactNode, isAuthenticated = false) => {
   const store = createTestStore(isAuthenticated);
-  return render(<Provider store={store}>{component}</Provider>);
+  const rendered = render(<Provider store={store}>{component}</Provider>);
+  return { ...rendered, store };
 };
 
 describe('Home', () => {
@@ -114,13 +114,20 @@ describe('Home', () => {
 
     it('should call logout mutation when logout button is clicked', async () => {
       const user = userEvent.setup();
-      renderWithRedux(<Home />, true);
+      const result = renderWithRedux(<Home />, true);
 
       const logoutButton = screen.getByRole('button', { name: 'Logout' });
       await user.click(logoutButton);
 
       // Logout mutation should be called
-      expect(logoutButton).toBeInTheDocument();
+      // Check that isAuthenticated is now false after logout
+      await vi.waitFor(() => {
+        const state = result.store.getState();
+        expect(state.auth.isAuthenticated).toBe(false);
+      });
+      await vi.waitFor(() => {
+        expect(screen.queryByRole('button', { name: 'Logout' })).not.toBeInTheDocument();
+      });
     });
 
     it('should not render LoginModal', () => {
