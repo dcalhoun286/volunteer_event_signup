@@ -46,7 +46,6 @@ export const LoginModal = (props: LoginModalProps) => {
         setFormData({ email: '', password: '' });
         setShowModal();
       } catch (err) {
-        console.error(err);
         // if error fails, eventually use this to warn the user the login failed
         // const errorMsg = err instanceof Error ? err.message : "Login failed";
       } finally {
@@ -98,7 +97,7 @@ export const LoginModal = (props: LoginModalProps) => {
         <Button
           className="btn btn-lg"
           variant="secondary"
-          onClick={setShowModal}
+          onClick={handleCloseModal}
           disabled={isLoading}
         >
           Cancel
