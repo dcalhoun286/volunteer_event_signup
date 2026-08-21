@@ -54,14 +54,14 @@ describe('RegisterModal', () => {
     expect(screen.getByText('Register')).toBeInTheDocument();
   });
 
-    it('should not render the modal when showModal is false', () => {
+  it('should not render the modal when showModal is false', () => {
     renderWithRedux(
-        <RegisterModal showModal={false} setShowModal={mockSetShowModal} />
+      <RegisterModal showModal={false} setShowModal={mockSetShowModal} />
     );
 
     const modalTitle = screen.queryByRole('heading', { name: 'Register' });
     expect(modalTitle).not.toBeInTheDocument();
-    });
+  });
 
   it('should render all required input fields', () => {
     renderWithRedux(
@@ -186,7 +186,8 @@ describe('RegisterModal', () => {
 
     const emailInput = screen.getByPlaceholderText('Enter email');
     const passwordInput = screen.getByPlaceholderText('Enter password');
-    const passwordConfirmInput = screen.getByPlaceholderText('Confirm password');
+    const passwordConfirmInput =
+      screen.getByPlaceholderText('Confirm password');
     const firstNameInput = screen.getByPlaceholderText('Enter first name');
     const lastNameInput = screen.getByPlaceholderText('Enter last name');
     const submitButton = screen.getByRole('button', { name: 'Submit' });

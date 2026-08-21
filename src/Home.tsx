@@ -7,8 +7,10 @@ import { useAuthState } from './hooks/useAuthState';
 import { useLogoutMutation } from './redux/api/auth.api';
 
 export const Home = () => {
-  const { toggle: showLoginModal, handleToggle: setShowLoginModal } = useToggle();
-  const { toggle: showRegisterModal, handleToggle: setShowRegisterModal } = useToggle();
+  const { toggle: showLoginModal, handleToggle: setShowLoginModal } =
+    useToggle();
+  const { toggle: showRegisterModal, handleToggle: setShowRegisterModal } =
+    useToggle();
   const { isAuthenticated } = useAuthState();
   const [logout] = useLogoutMutation();
 
@@ -24,13 +26,25 @@ export const Home = () => {
     <>
       {!isAuthenticated ? (
         <>
-          <LoginModal showModal={showLoginModal} setShowModal={setShowLoginModal} />
-          <RegisterModal showModal={showRegisterModal} setShowModal={setShowRegisterModal} />
-          <Button className="btn btn-lg custom-button" onClick={setShowLoginModal}>
+          <LoginModal
+            showModal={showLoginModal}
+            setShowModal={setShowLoginModal}
+          />
+          <RegisterModal
+            showModal={showRegisterModal}
+            setShowModal={setShowRegisterModal}
+          />
+          <Button
+            className="btn btn-lg custom-button"
+            onClick={setShowLoginModal}
+          >
             Login
           </Button>
           <p className="fs-2 mt-2">No account yet? Sign up below:</p>
-          <Button className="btn btn-lg custom-buton" onClick={setShowRegisterModal}>
+          <Button
+            className="btn btn-lg custom-buton"
+            onClick={setShowRegisterModal}
+          >
             Register
           </Button>
         </>

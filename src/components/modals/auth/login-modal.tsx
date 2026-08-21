@@ -45,6 +45,7 @@ export const LoginModal = (props: LoginModalProps) => {
         await login(formData).unwrap();
         setFormData({ email: '', password: '' });
         setShowModal();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         // if error fails, eventually use this to warn the user the login failed
         // const errorMsg = err instanceof Error ? err.message : "Login failed";
