@@ -98,9 +98,9 @@ export const RegisterModal = (props: RegisterModalProps) => {
                     <Form.Group className="mb-3">
                         <Form.Label>Password confirmation</Form.Label>
                         <Form.Control
-                            type="password_confirmation"
+                            type="password"
                             name="password_confirmation"
-                            placeholder="Enter password confirmation"
+                            placeholder="Confirm password"
                             value={formData.password_confirmation}
                             onChange={handleInputChange}
                             disabled={isLoading}
@@ -110,7 +110,7 @@ export const RegisterModal = (props: RegisterModalProps) => {
                     <Form.Group className="mb-3">
                         <Form.Label>First name</Form.Label>
                         <Form.Control
-                            type="first_name"
+                            type="text"
                             name="first_name"
                             placeholder="Enter first name"
                             value={formData.first_name}
@@ -122,7 +122,7 @@ export const RegisterModal = (props: RegisterModalProps) => {
                     <Form.Group className="mb-3">
                         <Form.Label>Last name</Form.Label>
                         <Form.Control
-                            type="last_name"
+                            type="text"
                             name="last_name"
                             placeholder="Enter last name"
                             value={formData.last_name}
