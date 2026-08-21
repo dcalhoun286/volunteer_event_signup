@@ -183,9 +183,11 @@ The application uses a **decoupled frontend/backend architecture:**
 - **Frontend** (React/TypeScript) builds independently and deploys to Vercel/Netlify
 - **Backend** (Rails) runs as a containerized API service
 
- - **Database** PostgreSQL <!-- hosted on AWS RDS -->
+- **Database** PostgreSQL <!-- hosted on AWS RDS -->
+
 <!-- - **Logging & Monitoring** via CloudWatch and ELK stack -->
- - Communication via REST API (HTTP)
+
+- Communication via REST API (HTTP)
 
 This separation allows independent scaling and deployment of frontend and backend.
 
