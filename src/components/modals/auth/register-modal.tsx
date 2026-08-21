@@ -3,25 +3,34 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useToggle } from '../../../hooks/useToggle';
-import { useLoginMutation } from '../../../redux/api/auth.api';
-import type { LoginRequest } from '../../../redux/api/auth.api';
+import { useRegisterMutation } from '../../../redux/api/auth.api';
+import type { RegisterRequest } from '../../../redux/api/auth.api';
 
-interface LoginModalProps {
+interface RegisterModalProps {
   showModal: boolean;
   setShowModal: () => void;
 }
 
-export const LoginModal = (props: LoginModalProps) => {
+export const RegisterModal = (props: RegisterModalProps) => {
   const { showModal, setShowModal } = props;
   const { toggle: isLoading, handleToggle: setIsLoading } = useToggle();
-  const [login] = useLoginMutation();
-  const [formData, setFormData] = useState<LoginRequest>({
+  const [register] = useRegisterMutation();
+  const [formData, setFormData] = useState<RegisterRequest>({
     email: '',
     password: '',
+    password_confirmation: '',
+    first_name: '',
+    last_name: '',
   });
 
   const handleCloseModal = useCallback(() => {
-    setFormData({ email: '', password: '' });
+    setFormData({
+      email: '',
+      password: '',
+      password_confirmation: '',
+      first_name: '',
+      last_name: '',
+    });
     setShowModal();
   }, [setShowModal]);
 
@@ -42,18 +51,24 @@ export const LoginModal = (props: LoginModalProps) => {
 
       setIsLoading();
       try {
-        await login(formData).unwrap();
-        setFormData({ email: '', password: '' });
+        await register(formData).unwrap();
+        setFormData({
+          email: '',
+          password: '',
+          password_confirmation: '',
+          first_name: '',
+          last_name: '',
+        });
         setShowModal();
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
-        // if error fails, eventually use this to warn the user the login failed
-        // const errorMsg = err instanceof Error ? err.message : "Login failed";
+        // if error fails, eventually use this to warn the user the register failed
+        // const errorMsg = err instanceof Error ? err.message : "Register failed";
       } finally {
         setIsLoading();
       }
     },
-    [formData, login, setIsLoading, setShowModal]
+    [formData, register, setIsLoading, setShowModal]
   );
 
   return (
@@ -64,10 +79,10 @@ export const LoginModal = (props: LoginModalProps) => {
       onHide={handleCloseModal}
     >
       <Modal.Header closeButton={!isLoading}>
-        <Modal.Title>Login</Modal.Title>
+        <Modal.Title>Register</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form id="login-form" onSubmit={handleSubmit}>
+        <Form id="register-form" onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -92,6 +107,42 @@ export const LoginModal = (props: LoginModalProps) => {
               required
             />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Password confirmation</Form.Label>
+            <Form.Control
+              type="password"
+              name="password_confirmation"
+              placeholder="Confirm password"
+              value={formData.password_confirmation}
+              onChange={handleInputChange}
+              disabled={isLoading}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>First name</Form.Label>
+            <Form.Control
+              type="text"
+              name="first_name"
+              placeholder="Enter first name"
+              value={formData.first_name}
+              onChange={handleInputChange}
+              disabled={isLoading}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Last name</Form.Label>
+            <Form.Control
+              type="text"
+              name="last_name"
+              placeholder="Enter last name"
+              value={formData.last_name}
+              onChange={handleInputChange}
+              disabled={isLoading}
+              required
+            />
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -106,7 +157,7 @@ export const LoginModal = (props: LoginModalProps) => {
         <Button
           className="btn btn-lg custom-button"
           type="submit"
-          form="login-form"
+          form="register-form"
           disabled={isLoading}
         >
           {isLoading ? 'Loading...' : 'Submit'}
