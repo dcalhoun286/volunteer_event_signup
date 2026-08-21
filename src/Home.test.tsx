@@ -126,7 +126,9 @@ describe('Home', () => {
         expect(state.auth.isAuthenticated).toBe(false);
       });
       await vi.waitFor(() => {
-        expect(screen.queryByRole('button', { name: 'Logout' })).not.toBeInTheDocument();
+        expect(
+          screen.queryByRole('button', { name: 'Logout' })
+        ).not.toBeInTheDocument();
       });
     });
 
