@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_060059) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_24_015729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -51,6 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_060059) do
     t.jsonb "metadata", default: {}
     t.string "name", null: false
     t.datetime "start_date", null: false
+    t.string "timezone", default: "UTC", null: false
     t.datetime "updated_at", null: false
     t.index ["created_by_id"], name: "index_events_on_created_by_id"
   end
