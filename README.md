@@ -59,6 +59,7 @@ This project solves the friction of manual volunteer sign-up coordination. Organ
 - Churn prediction model for volunteer retention
 - Shift reminder notifications
 - Advanced RBAC permissions
+- API response schemas and validation
 
 ## Getting Started
 
