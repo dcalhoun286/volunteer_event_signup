@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       get "/users/me", to: "users#me"
       post "/users/login", to: "users#login"
       post "/users/logout", to: "users#logout"
+
+      resources :events
     end
   end
 end

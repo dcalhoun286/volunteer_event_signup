@@ -12,4 +12,8 @@ class User < ApplicationRecord
     has_many :volunteer_registrations, dependent: :destroy
     has_one :oauth_credential, dependent: :destroy
     has_one :two_factor_auth, dependent: :destroy
+
+    def admin?
+        role == "admin"
+    end
 end

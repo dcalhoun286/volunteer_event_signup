@@ -15,4 +15,12 @@ if Rails.env.development?
         user.first_name = "John"
         user.last_name = "Doe"
     end
+
+    User.find_or_create_by!(email: "user2@example.test") do |user|
+        user.password = "password!123"
+        user.password_confirmation = "password!123"
+        user.first_name = "Jane"
+        user.last_name = "Doe"
+        user.role = "admin"
+    end
 end
