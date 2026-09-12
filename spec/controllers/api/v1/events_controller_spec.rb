@@ -66,7 +66,6 @@ RSpec.describe Api::V1::EventsController do
     end
 
     context "when user is admin" do
-
         before { set_auth_cookie(admin_user) }
       it "creates a new event" do
         expect {
