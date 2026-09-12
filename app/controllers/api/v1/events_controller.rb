@@ -15,7 +15,7 @@ module Api
 
             def create
                 unless @current_user.admin?
-                    return render json: { error: "Only admins can create events" }, status: :unauthorized
+                    render json: { error: "Only admins can create events" }, status: :unauthorized
                 end
 
                 event = Event.new(event_params)
@@ -44,7 +44,7 @@ module Api
 
             def authorize_organizer
                 unless @current_user&.admin?
-                    return render json: { error: "Unauthorized" }, status: :unauthorized
+                    render json: { error: "Unauthorized" }, status: :unauthorized
                 end
             end
 
