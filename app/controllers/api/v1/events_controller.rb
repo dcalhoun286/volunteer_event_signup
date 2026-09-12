@@ -2,7 +2,7 @@ module Api
     module V1
         class EventsController < ApplicationController
             before_action :set_event, only: [ :show, :update, :destroy ]
-            before_action :authorize_organizer, only: [ :update, :destroy ]
+            before_action :authorize_organizer, only: [ :create, :update, :destroy ]
 
             def index
                 events = Event.all
@@ -14,10 +14,6 @@ module Api
             end
 
             def create
-                unless @current_user.admin?
-                    render json: { error: "Only admins can create events" }, status: :unauthorized
-                end
-
                 event = Event.new(event_params)
                 event.created_by_id = @current_user.id
                 if event.save

@@ -21,5 +21,6 @@ if Rails.env.development?
         user.password_confirmation = "password!123"
         user.first_name = "Jane"
         user.last_name = "Doe"
+        user.role = "admin"
     end
 end
