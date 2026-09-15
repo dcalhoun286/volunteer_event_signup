@@ -25,7 +25,7 @@ const renderWithRedux = (component: ReactNode, initialState = {}) => {
   const store = createTestStore(initialState);
   return {
     ...render(<Provider store={store}>{component}</Provider>),
-    store
+    store,
   };
 };
 
@@ -69,39 +69,39 @@ describe('Header', () => {
       )
     ).toBeInTheDocument();
   });
-  
+
   describe('when not authenticated', () => {
     it('should not render navbar button', () => {
       renderWithRedux(<Header />, {
         auth: { isAuthenticated: false, isLoading: false, error: null },
       });
-      
+
       expect(screen.queryByTestId('navbar-button')).not.toBeInTheDocument();
     });
-    
+
     it('should not render logout button', () => {
       renderWithRedux(<Header />, {
         auth: { isAuthenticated: false, isLoading: false, error: null },
       });
-      
+
       expect(
         screen.queryByRole('button', { name: 'Logout' })
       ).not.toBeInTheDocument();
     });
   });
-  
+
   describe('when authenticated', () => {
     it('should render the navbar button', async () => {
       const store = createTestStore({
         auth: { isAuthenticated: true, isLoading: false, error: null },
       });
-  
+
       render(
         <Provider store={store}>
           <Header />
         </Provider>
       );
-  
+
       await vi.waitFor(() => {
         expect(screen.getByTestId('navbar-button')).toBeInTheDocument();
       });
@@ -116,16 +116,20 @@ describe('Header', () => {
         <Provider store={store}>
           <Header />
         </Provider>
-      )
+      );
 
       await vi.waitFor(() => {
-        expect(screen.getByRole('button', { name: 'Logout' })).toBeInTheDocument();
+        expect(
+          screen.getByRole('button', { name: 'Logout' })
+        ).toBeInTheDocument();
       });
     });
 
     it('should call logout mutation when logout button is clicked', async () => {
       const user = userEvent.setup();
-      const result = renderWithRedux(<Header />, { auth: { isAuthenticated: true, isLoading: false, error: null }});
+      const result = renderWithRedux(<Header />, {
+        auth: { isAuthenticated: true, isLoading: false, error: null },
+      });
 
       const logoutButton = screen.getByRole('button', { name: 'Logout' });
       await user.click(logoutButton);

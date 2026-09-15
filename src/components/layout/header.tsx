@@ -9,7 +9,7 @@ import { useLogoutMutation } from '../../redux/api/auth.api';
 
 const LOGOUT_BUTTON_STYLE: React.CSSProperties = {
   display: 'flex',
-  justifyContent: 'flex-end'
+  justifyContent: 'flex-end',
 };
 
 export const Header = () => {
@@ -35,9 +35,14 @@ export const Header = () => {
         <>
           <Container fluid>
             <Row className="justify-content-between">
-              <Col xs={2}><Navbar /></Col>
+              <Col xs={2}>
+                <Navbar />
+              </Col>
               <Col xs={3} style={LOGOUT_BUTTON_STYLE}>
-                <Button className="btn btn-lg custom-button" onClick={handleLogout}>
+                <Button
+                  className="btn btn-lg custom-button"
+                  onClick={handleLogout}
+                >
                   Logout
                 </Button>
               </Col>
