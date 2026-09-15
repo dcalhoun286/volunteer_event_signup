@@ -7,6 +7,7 @@ import authReducer from '../../redux/slices/auth.slice';
 import { authApi } from '../../redux/api/auth.api';
 import { authHandlers } from '../../redux/handlers/auth-handlers';
 import { Header } from './header';
+import { BrowserRouter as Router } from 'react-router-dom';
 import type { ReactNode } from 'react';
 
 const createTestStore = (initialState = {}) => {
@@ -24,7 +25,11 @@ const createTestStore = (initialState = {}) => {
 const renderWithRedux = (component: ReactNode, initialState = {}) => {
   const store = createTestStore(initialState);
   return {
-    ...render(<Provider store={store}>{component}</Provider>),
+    ...render(
+      <Provider store={store}>
+        <Router>{component}</Router>
+      </Provider>
+    ),
     store,
   };
 };
@@ -92,15 +97,9 @@ describe('Header', () => {
 
   describe('when authenticated', () => {
     it('should render the navbar button', async () => {
-      const store = createTestStore({
+      renderWithRedux(<Header />, {
         auth: { isAuthenticated: true, isLoading: false, error: null },
       });
-
-      render(
-        <Provider store={store}>
-          <Header />
-        </Provider>
-      );
 
       await vi.waitFor(() => {
         expect(screen.getByTestId('navbar-button')).toBeInTheDocument();
@@ -108,15 +107,9 @@ describe('Header', () => {
     });
 
     it('should render the logout button', async () => {
-      const store = createTestStore({
+      renderWithRedux(<Header />, {
         auth: { isAuthenticated: true, isLoading: false, error: null },
       });
-
-      render(
-        <Provider store={store}>
-          <Header />
-        </Provider>
-      );
 
       await vi.waitFor(() => {
         expect(

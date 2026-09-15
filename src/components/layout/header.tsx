@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -16,13 +17,16 @@ export const Header = () => {
   const { isAuthenticated } = useAuthState();
   const [logout] = useLogoutMutation();
 
+  const navigate = useNavigate();
+
   const handleLogout = useCallback(async () => {
     try {
       await logout().unwrap();
+      navigate('/');
     } catch (err) {
       console.error('Logout failed', err);
     }
-  }, [logout]);
+  }, [logout, navigate]);
 
   return (
     <header>
