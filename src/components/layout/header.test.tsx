@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { setupServer } from 'msw/node';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -22,7 +23,10 @@ const createTestStore = (initialState = {}) => {
 
 const renderWithRedux = (component: ReactNode, initialState = {}) => {
   const store = createTestStore(initialState);
-  return render(<Provider store={store}>{component}</Provider>);
+  return {
+    ...render(<Provider store={store}>{component}</Provider>),
+    store
+  };
 };
 
 describe('Header', () => {
@@ -46,17 +50,16 @@ describe('Header', () => {
     server.listen();
   });
 
+  afterEach(() => server.resetHandlers());
+
   afterAll(() => {
     // @ts-expect-error matchMedia is a mock and needs to be deleted
     delete window.matchMedia;
     server.close();
   });
 
-  test('loads and displays header content', () => {
-    renderWithRedux(<Header />, {
-      auth: { isAuthenticated: false, isLoading: false, error: null },
-    });
-
+  it('loads and displays header content', () => {
+    renderWithRedux(<Header />);
     expect(
       screen.getByRole('heading', { name: 'Volunteer Event Signup' })
     ).toBeInTheDocument();
@@ -66,26 +69,78 @@ describe('Header', () => {
       )
     ).toBeInTheDocument();
   });
-
-  test('navbar button is not visible when user is not logged in', () => {
-    renderWithRedux(<Header />, {
-      auth: { isAuthenticated: false, isLoading: false, error: null },
+  
+  describe('when not authenticated', () => {
+    it('should not render navbar button', () => {
+      renderWithRedux(<Header />, {
+        auth: { isAuthenticated: false, isLoading: false, error: null },
+      });
+      
+      expect(screen.queryByTestId('navbar-button')).not.toBeInTheDocument();
     });
-
-    expect(screen.queryByTestId('navbar-button')).not.toBeInTheDocument();
+    
+    it('should not render logout button', () => {
+      renderWithRedux(<Header />, {
+        auth: { isAuthenticated: false, isLoading: false, error: null },
+      });
+      
+      expect(
+        screen.queryByRole('button', { name: 'Logout' })
+      ).not.toBeInTheDocument();
+    });
   });
-
-  test('navbar button is visible when user is logged in', async () => {
-    const store = createTestStore({
-      auth: { isAuthenticated: true, isLoading: false, error: null },
+  
+  describe('when authenticated', () => {
+    it('should render the navbar button', async () => {
+      const store = createTestStore({
+        auth: { isAuthenticated: true, isLoading: false, error: null },
+      });
+  
+      render(
+        <Provider store={store}>
+          <Header />
+        </Provider>
+      );
+  
+      await vi.waitFor(() => {
+        expect(screen.getByTestId('navbar-button')).toBeInTheDocument();
+      });
     });
-    render(
-      <Provider store={store}>
-        <Header />
-      </Provider>
-    );
-    await vi.waitFor(() => {
-      expect(screen.getByTestId('navbar-button')).toBeInTheDocument();
+
+    it('should render the logout button', async () => {
+      const store = createTestStore({
+        auth: { isAuthenticated: true, isLoading: false, error: null },
+      });
+
+      render(
+        <Provider store={store}>
+          <Header />
+        </Provider>
+      )
+
+      await vi.waitFor(() => {
+        expect(screen.getByRole('button', { name: 'Logout' })).toBeInTheDocument();
+      });
+    });
+
+    it('should call logout mutation when logout button is clicked', async () => {
+      const user = userEvent.setup();
+      const result = renderWithRedux(<Header />, { auth: { isAuthenticated: true, isLoading: false, error: null }});
+
+      const logoutButton = screen.getByRole('button', { name: 'Logout' });
+      await user.click(logoutButton);
+
+      // Logout mutation should be called
+      // Check that isAuthenticated is now false after logout
+      await vi.waitFor(() => {
+        const state = result.store.getState();
+        expect(state.auth.isAuthenticated).toBe(false);
+      });
+      await vi.waitFor(() => {
+        expect(
+          screen.queryByRole('button', { name: 'Logout' })
+        ).not.toBeInTheDocument();
+      });
     });
   });
 });
