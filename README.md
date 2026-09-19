@@ -153,6 +153,7 @@ bundle exec rubocop --fix           # Fix auto-fixable backend linting issues
 yarn lint                           # Lint frontend code
 yarn lint:fix                       # Fix auto-fixable frontend linting issues
 yarn format:check                   # Check frontend code against formatting rules
+yarn format:fix                     # Fix auto-fixable frontend formatting issues
 bin/brakeman --no-pager             # Security scan
 bin/bundler-audit                   # Check dependencies for vulnerabilities
 ```
@@ -209,9 +210,10 @@ GitHub Actions runs automatically on every push and PR:
 
 1. **Security scans** (Brakeman, Bundler Audit)
 2. **Linting** (RuboCop, ESLint)
-3. **Backend tests** (RSpec)
-4. **Frontend tests** (Vitest)
-5. **Frontend build** (React build to `dist/`)
+3. **Formatting** (Prettier)
+4. **Backend tests** (RSpec)
+5. **Frontend tests** (Vitest)
+6. **Frontend build** (React build to `dist/`)
 
 All checks must pass before merging to `main`.
 

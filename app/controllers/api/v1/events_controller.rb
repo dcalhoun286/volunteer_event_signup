@@ -51,7 +51,7 @@ module Api
             end
 
             def event_params
-                params.require(:event).permit(:name, :description, :start_date, :end_date, :location)
+                params.require(:event).permit(:name, :description, :start_date, :end_date, :location, :timezone)
             end
         end
     end
