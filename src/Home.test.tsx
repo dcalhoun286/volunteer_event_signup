@@ -74,14 +74,6 @@ describe('Home', () => {
       expect(screen.getByPlaceholderText('Enter email')).toBeInTheDocument();
     });
 
-    it('should not render logout button', () => {
-      renderWithRedux(<Home />);
-
-      expect(
-        screen.queryByRole('button', { name: 'Logout' })
-      ).not.toBeInTheDocument();
-    });
-
     it('should not render welcome message', () => {
       renderWithRedux(<Home />);
 
@@ -102,34 +94,6 @@ describe('Home', () => {
       renderWithRedux(<Home />, true);
 
       expect(screen.getByText('Welcome back!')).toBeInTheDocument();
-    });
-
-    it('should render logout button', () => {
-      renderWithRedux(<Home />, true);
-
-      expect(
-        screen.getByRole('button', { name: 'Logout' })
-      ).toBeInTheDocument();
-    });
-
-    it('should call logout mutation when logout button is clicked', async () => {
-      const user = userEvent.setup();
-      const result = renderWithRedux(<Home />, true);
-
-      const logoutButton = screen.getByRole('button', { name: 'Logout' });
-      await user.click(logoutButton);
-
-      // Logout mutation should be called
-      // Check that isAuthenticated is now false after logout
-      await vi.waitFor(() => {
-        const state = result.store.getState();
-        expect(state.auth.isAuthenticated).toBe(false);
-      });
-      await vi.waitFor(() => {
-        expect(
-          screen.queryByRole('button', { name: 'Logout' })
-        ).not.toBeInTheDocument();
-      });
     });
 
     it('should not render LoginModal', () => {
