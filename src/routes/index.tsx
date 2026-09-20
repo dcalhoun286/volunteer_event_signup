@@ -12,9 +12,11 @@ import { Header } from '../components/layout/header';
 import { Main } from '../components/layout/main';
 import { Footer } from '../components/layout/footer';
 import { PrivateRoute } from './private-route';
+import { TestErrorPage } from '../components/pages/test-error/test-error-page';
 import { useAuthState } from '../hooks/useAuthState';
 import { useGetCurrentUserQuery } from '../redux/api/auth.api';
 import { setAuthenticated } from '../redux/slices/auth.slice';
+import { NotFound } from '../components/error-handling/not-found';
 
 const RoutesComponent = () => {
   const { isAuthenticated } = useAuthState();
@@ -60,6 +62,10 @@ const RoutesComponent = () => {
                   </PrivateRoute>
                 }
               />
+              {import.meta.env.DEV && (
+                <Route path="/test-error" element={<TestErrorPage />} />
+              )}
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
         </div>
