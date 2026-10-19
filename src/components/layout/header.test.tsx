@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../../redux/slices/auth.slice';
 import { authApi } from '../../redux/api/auth.api';
-import { authHandlers } from '../../redux/handlers/auth-handlers';
+import { authHandlers } from '../../mocks/handlers/auth.handlers';
 import { Header } from './header';
 import { BrowserRouter as Router } from 'react-router-dom';
 import type { ReactNode } from 'react';

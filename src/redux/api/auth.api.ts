@@ -17,6 +17,10 @@ export interface AuthResponse {
   success: boolean;
 }
 
+export interface CurrentUserResponse extends AuthResponse {
+  success: true;
+}
+
 const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
 
 export const authApi = createApi({

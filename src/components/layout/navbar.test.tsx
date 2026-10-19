@@ -9,7 +9,7 @@ import { useToggle } from '../../hooks/useToggle';
 import authReducer from '../../redux/slices/auth.slice';
 import { authApi } from '../../redux/api/auth.api';
 import { eventsApi } from '../../redux/api/events.api';
-import { authHandlers } from '../../redux/handlers/auth-handlers';
+import { authHandlers } from '../../mocks/handlers/auth.handlers';
 import { eventsHandlers } from '../../mocks/handlers/events.handlers';
 import type { ReactNode } from 'react';
 
